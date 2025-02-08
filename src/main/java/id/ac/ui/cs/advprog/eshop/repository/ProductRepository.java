@@ -19,4 +19,9 @@ public class ProductRepository {
     public Iterator<Product> findAll() {
         return productData.iterator();
     }
+
+    // deletes product by productid. uses removeIf to remove any product with the matching id.
+    public void delete(String id) {
+        productData.removeIf(product -> id.equals(product.getProductId()));
+    }
 }
