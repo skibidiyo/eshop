@@ -8,6 +8,17 @@ For the edit feature, a form is displayed with the product's current details usi
 I tried to follow clean code principles by splitting my code into different layers (Model, Repository, Service, and Controller), using clear method names like create, delete, getById, and update, and keeping my code modular and easy to understand. 
 I also applied some secure coding practices by generating unique IDs with UUID and safely checking for null values to avoid errors. 
 However, I think my code could be improved by adding better error handling with a global exception handler, using input validation annotations like @Valid to ensure user inputs are correct, and adding logging to help track what happens in the app. 
-Overall, I believe my code is clean and follows basic security practices, but there is still room for improvement as I learn more.
+
+
+# Reflection 2
+- After writing the unit tests, I feel more confident that im taking the right steps in testing my code and I understand that there is no exact number of unit tests that must be written.
+  Although reaching high or even 100% code coverage is a positive sign, it doesnt mean our code is completely bug-free. 
+  Code coverage simply shows which lines have been executed, not the overall quality or thoroughness of the tests.
+
+
+- The new functional test suite is less clean because it duplicates the same setup procedures and instance variables from the previous tests, which violates the DRY principle and makes the tests harder to manage.
+  A better approach is to extract the common setup code into a shared base class or helper, so all test suites can reuse the same code, making the overall test code cleaner and easier to update.
+
+
 
 </Details>
