@@ -3,8 +3,8 @@ plugins {
     jacoco
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.sonarqube") version "6.0.1.5171"
 }
-
 group = "id.ac.ui.cs.advprog"
 version = "0.0.1-SNAPSHOT"
 
@@ -28,6 +28,13 @@ val seleniumJavaVersion = "4.14.1"
 val seleniumJupiterVersion = "5.0.1"
 val webdrivermanagerVersion = "5.6.3"
 
+sonar {
+  properties {
+    property("sonar.projectKey", "skibidiyo_eshop")
+    property("sonar.organization", "skibidiyo")
+    property("sonar.host.url", "https://sonarcloud.io")
+  }
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -79,3 +86,4 @@ tasks.jacocoTestReport {
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
+
