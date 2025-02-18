@@ -3,7 +3,7 @@ name: Deploy to Koyeb via API
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch: 
 
 jobs:
