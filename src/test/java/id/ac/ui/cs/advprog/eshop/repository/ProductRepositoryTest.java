@@ -65,7 +65,6 @@ class ProductRepositoryTest {
         savedProduct = productIterator.next();
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
-
     }
 
     // positive
@@ -119,7 +118,13 @@ class ProductRepositoryTest {
         product.setProductQuantity(15);
         productRepository.create(product);
 
-        // edit the product name
+        // Verify initial state using findById.
+        Product initialProduct = productRepository.findById("test-id-3");
+        assertNotNull(initialProduct);
+        assertEquals("Original", initialProduct.getProductName());
+        assertEquals(15, initialProduct.getProductQuantity());
+
+        // edit the product name and quantity
         Product updatedProduct = new Product();
         updatedProduct.setProductId("test-id-3");
         updatedProduct.setProductName("Updated");
@@ -136,10 +141,21 @@ class ProductRepositoryTest {
         assertNotNull(retrievedProduct);
         assertEquals("Updated", retrievedProduct.getProductName());
         assertEquals(30, retrievedProduct.getProductQuantity());
+
+        // Additional check: findById returns null for non-existent product.
+        assertNull(productRepository.findById("non-existent-id"));
     }
 
+    // negative
     @Test
     void testUpdateNonExistingProduct() {
+        // First, create a product so that the loop in update is actually iterated:
+        Product existingProduct = new Product();
+        existingProduct.setProductId("existing-id");
+        existingProduct.setProductName("Existing Product");
+        existingProduct.setProductQuantity(20);
+        productRepository.create(existingProduct);
+
         // Prepare an updated product with an ID that is not in the repository.
         Product updatedProduct = new Product();
         updatedProduct.setProductId("non-existent-id");
@@ -149,5 +165,8 @@ class ProductRepositoryTest {
         // Attempt to update and expect a null result.
         Product result = productRepository.update(updatedProduct);
         assertNull(result);
+
+        // Verify that findById returns null for the non-existent product.
+        assertNull(productRepository.findById("non-existent-id"));
     }
 }
