@@ -7,7 +7,6 @@ on:
       - module-2-exercise  # runs on branch main and module-2-exercise
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
   build:
     name: Build and Analyze with SonarCloud
