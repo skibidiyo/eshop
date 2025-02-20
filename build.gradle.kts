@@ -75,5 +75,7 @@ sonar {
         property("sonar.projectKey", "skibidiyo_eshop")
         property("sonar.organization", "skibidiyo")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+
     }
 }
