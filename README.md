@@ -31,7 +31,16 @@ However, I think my code could be improved by adding better error handling with 
 
 - List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them.
   Issue : The string "redirect:/product/list" was repeated in multiple methods.\
-  Strategy : I made a constant called REDIRECT_PRODUCT_LIST to store "redirect:/product/list", so I only write it once and dont have to repeat it all over the code
+  Strategy : I made a constant called REDIRECT_PRODUCT_LIST to store "redirect:/product/list", so I only write it once and dont have to repeat it all over the code\
+  Issue : Remove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from methods body in HomePageFunctionalTest\
+  Strategy : I removed the unnecessary throws Exception clauses to keep the code clean and simple\
+  Issue : Remove this unused import 'org.springframework.boot.test.mock.mockito.MockBean' in ProductRepositoryTest\
+  Strategy : I removed the unused import\
+  Issue : Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation in ProductRepositoryTest and EshopApplicationTests\
+  Strategy : Added comments\
+  Issue : Do not hardcode version numbers in build.gradle.kts\
+  Strategy : I fixed the hardcoded version numbers by moving them into a central Gradle Version Catalog, so my build file now just references those versions
+
 
 
 - Look at your CI/CD workflows (GitHub)/pipelines (GitLab). Do you think the current implementation has met the definition of Continuous Integration and Continuous Deployment? Explain the reasons (minimum 3 sentences)!\
