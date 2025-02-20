@@ -13,12 +13,17 @@ import java.util.UUID;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private final ProductRepository productRepository;
+
     @Autowired
-    private ProductRepository productRepository;
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     // create a new product
     @Override
     public Product create(Product product) {
-        // generates unique productud
+        // generates unique product id
         if (product.getProductId() == null || product.getProductId().isEmpty()) {
             product.setProductId(UUID.randomUUID().toString());
         }
@@ -33,7 +38,8 @@ public class ProductServiceImpl implements ProductService {
         productIterator.forEachRemaining(allProduct::add);
         return allProduct;
     }
-    // deletes a product by its productid.
+
+    // deletes a product by its product id.
     @Override
     public void delete(String productId) {
         productRepository.delete(productId);
