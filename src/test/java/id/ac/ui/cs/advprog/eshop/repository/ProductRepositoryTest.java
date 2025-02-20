@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Iterator;
 
@@ -20,6 +19,11 @@ class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        /*
+         * This method is intentionally left empty because:
+         * - The ProductRepository is injected using @InjectMocks, so no additional setup is needed.
+         * - No external dependencies or initialization logic is required for these tests.
+         */
     }
 
     @Test
