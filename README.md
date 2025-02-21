@@ -29,7 +29,7 @@ However, I think my code could be improved by adding better error handling with 
 
 # Reflection
 
-- List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them.
+- List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them.\
   Issue : The string "redirect:/product/list" was repeated in multiple methods.\
   Strategy : I made a constant called REDIRECT_PRODUCT_LIST to store "redirect:/product/list", so I only write it once and dont have to repeat it all over the code\
   Issue : Remove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from methods body in HomePageFunctionalTest\
