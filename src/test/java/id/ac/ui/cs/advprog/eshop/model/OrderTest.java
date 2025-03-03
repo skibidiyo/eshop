@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,10 +66,10 @@ class OrderTest {
                 this.products,
                 1708560000L,
                 "Safira Sudrajat",
-                "SUCCESS"
+                OrderStatus.SUCCESS.getValue()
         );
 
-        assertEquals("SUCCESS", order.getStatus());
+        assertEquals(OrderStatus.SUCCESS.getValue(), order.getStatus());
     }
 
     @Test
@@ -93,8 +94,8 @@ class OrderTest {
                 "Safira Sudrajat"
         );
 
-        order.setStatus("CANCELLED");
-        assertEquals("CANCELLED", order.getStatus());
+        order.setStatus(OrderStatus.CANCELLED.getValue());
+        assertEquals(OrderStatus.CANCELLED.getValue(), order.getStatus());
     }
 
     @Test
@@ -106,7 +107,7 @@ class OrderTest {
                 "Safira Sudrajat"
         );
 
-        assertThrows(IllegalArgumentException.class, () -> order.setStatus("MEOW"));
+            assertThrows(IllegalArgumentException.class, () -> order.setStatus("MEOW"));
     }
 
 
