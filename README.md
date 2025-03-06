@@ -79,3 +79,22 @@ However, I think my code could be improved by adding better error handling with 
 
 
 </Details>
+
+<Details>
+
+<Summary>Assignment 4</Summary>
+
+## Reflection
+
+1) Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.\
+    I find this TDD flow helpful because it forces me to think about the expected outcomes before coding, which helps catch bugs early. 
+    However, sometimes I miss edge cases or unexpected inputs. 
+    Next time, Ill plan my tests more thoroughly to cover these scenarios.
+
+
+2) You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.\
+    My unit tests mostly followed the F.I.R.S.T. principle. They are fast, independent, repeatable, self-validating, and timely. 
+    But I realized some tests were not fully independent because they sometimes depended on shared setup data. 
+    Next time, Ill make sure each test has its own isolated setup so they don't rely on each other.
+
+</Details>
