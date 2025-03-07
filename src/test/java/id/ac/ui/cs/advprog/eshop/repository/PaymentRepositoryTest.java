@@ -1,101 +1,83 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 
-
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PaymentRepositoryTest {
-    PaymentRepository paymentRepository;
-    List<Payment> payments;
+    private PaymentRepository repo;
+    private Payment payment1;
+    private Payment payment2;
 
     @BeforeEach
     void setUp() {
-        paymentRepository = new PaymentRepository();
-        payments = new ArrayList<>();
-        Map<String, String> paymentData1 = new HashMap<>();
-        paymentData1.put("voucherCode", "ESHOP123ABCD5678");
-        Payment successPayment1 = new Payment("13652556-012a-4c07-b546-54eb1396d79b", "voucherCode", paymentData1, PaymentStatus.SUCCESS.getValue());
-        payments.add(successPayment1);
-        Payment rejectedPayment1 = new Payment("ed2a3070-1c4c-4cb9-81c2-44ca6cfb1c63", "bankTransfer", paymentData1, PaymentStatus.REJECTED.getValue());
-        payments.add(rejectedPayment1);
+        repo = new PaymentRepository();
+        Map<String, String> data = new HashMap<>();
+        data.put("voucherCode", "ESHOP123ABCD5678");
+        payment1 = new Payment("13652556-012a-4c07-b546-54eb1396d79b", "voucherCode", data, PaymentStatus.SUCCESS.getValue());
+        payment2 = new Payment("ed2a3070-1c4c-4cb9-81c2-44ca6cfb1c63", "bankTransfer", data, PaymentStatus.REJECTED.getValue());
     }
 
     @Test
     void testSaveCreate() {
-        Payment payment = payments.get(1);
-        Payment result = paymentRepository.save(payment);
-
-        Payment findResult = paymentRepository.getPayment(payments.get(1).getId());
-        assertEquals(payment.getId(), result.getId());
-        assertEquals(payment.getId(), findResult.getId());
-        assertEquals(payment.getMethod(), findResult.getMethod());
-        assertEquals(payment.getPaymentData(), findResult.getPaymentData());
-        assertEquals(payment.getStatus(), findResult.getStatus());
+        Payment result = repo.save(payment2);
+        Payment found = repo.getPayment(payment2.getId());
+        assertPaymentEquals(payment2, result);
+        assertPaymentEquals(payment2, found);
     }
 
     @Test
     void testSaveUpdate() {
-        Payment payment = payments.get(0);
-        paymentRepository.save(payment);
-        Payment newPayment = new Payment(payment.getId(), payment.getMethod(), payment.getPaymentData());
-        newPayment.setStatus(PaymentStatus.REJECTED.getValue());
-        Payment result = paymentRepository.save(newPayment);
+        repo.save(payment1);
+        Payment updated = new Payment(payment1.getId(), payment1.getMethod(), payment1.getPaymentData());
+        updated.setStatus(PaymentStatus.REJECTED.getValue());
+        Payment result = repo.save(updated);
+        Payment found = repo.getPayment(payment1.getId());
 
-        Payment findResult = paymentRepository.getPayment(payments.get(0).getId());
-        assertEquals(payment.getId(), result.getId());
-        assertEquals(payment.getId(), findResult.getId());
-        assertEquals(payment.getMethod(), findResult.getMethod());
-        assertEquals(payment.getPaymentData(), findResult.getPaymentData());
-        assertEquals(PaymentStatus.REJECTED.getValue(), findResult.getStatus());
+        assertEquals(payment1.getId(), result.getId());
+        assertEquals(payment1.getId(), found.getId());
+        assertEquals(payment1.getMethod(), found.getMethod());
+        assertEquals(payment1.getPaymentData(), found.getPaymentData());
+        assertEquals(PaymentStatus.REJECTED.getValue(), found.getStatus());
     }
 
     @Test
     void testGetPaymentFound() {
-        for (Payment payment: payments) {
-            paymentRepository.save(payment);
-        }
-
-        Payment findResult = paymentRepository.getPayment(payments.get(1).getId());
-        assertEquals(payments.get(1).getId(), findResult.getId());
-        assertEquals(payments.get(1).getMethod(), findResult.getMethod());
-        assertEquals(payments.get(1).getPaymentData(), findResult.getPaymentData());
-        assertEquals(payments.get(1).getStatus(), findResult.getStatus());
+        repo.save(payment1);
+        repo.save(payment2);
+        Payment found = repo.getPayment(payment2.getId());
+        assertPaymentEquals(payment2, found);
     }
 
     @Test
     void testGetPaymentNotFound() {
-        for (Payment payment : payments) {
-            paymentRepository.save(payment);
-        }
-
-        Payment findResult = paymentRepository.getPayment("zczc");
-        assertNull(findResult);
+        repo.save(payment1);
+        repo.save(payment2);
+        assertNull(repo.getPayment("zczc"));
     }
 
     @Test
     void testGetAllPayments() {
-        for (Payment payment : payments) {
-            paymentRepository.save(payment);
-        }
+        repo.save(payment1);
+        repo.save(payment2);
+        List<Payment> list = repo.getAllPayments();
+        assertEquals(2, list.size());
+        // Assuming insertion order is preserved
+        assertPaymentEquals(payment1, list.get(0));
+        assertPaymentEquals(payment2, list.get(1));
+    }
 
-        List<Payment> paymentList = paymentRepository.getAllPayments();
-        assertEquals(2, paymentList.size());
-        assertEquals(payments.get(1).getId(), paymentList.get(1).getId());
-        assertEquals(payments.get(1).getMethod(), paymentList.get(1).getMethod());
-        assertEquals(payments.get(1).getPaymentData(), paymentList.get(1).getPaymentData());
-        assertEquals(payments.get(1).getStatus(), paymentList.get(1).getStatus());
-        assertEquals(payments.get(0).getId(), paymentList.get(0).getId());
-        assertEquals(payments.get(0).getMethod(), paymentList.get(0).getMethod());
-        assertEquals(payments.get(0).getPaymentData(), paymentList.get(0).getPaymentData());
-        assertEquals(payments.get(0).getStatus(), paymentList.get(0).getStatus());
+    private void assertPaymentEquals(Payment expected, Payment actual) {
+        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected.getMethod(), actual.getMethod());
+        assertEquals(expected.getPaymentData(), actual.getPaymentData());
+        assertEquals(expected.getStatus(), actual.getStatus());
     }
 }
